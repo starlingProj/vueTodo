@@ -1,5 +1,28 @@
 <script setup>
 import { Icon } from '@iconify/vue';
+import {ref} from 'vue'
+let id=0;
+const todoList = ref([])
+const userTask = ref('')
+const changeStatus = (id)=>{
+  
+    const itemToUpdate = todoList.value.find(item => item.id === id);
+     itemToUpdate.data = !itemToUpdate.data;
+
+}
+const addSomeTask = ()=>{
+    !userTask.value? 0
+    :todoList.value.push({
+        id:id++,
+        task:userTask.value,
+        data:false
+    })
+    userTask.value=""
+}
+const removeUserTask = (list)=>{
+    todoList.value= todoList.value.filter(item=> item!=list)
+   
+}
 </script>
 
 <template>
@@ -8,24 +31,36 @@ import { Icon } from '@iconify/vue';
             <h4>СПИСОК ЗАВДАНЬ</h4>
         </div>
         <div className="todo__add-todoes">
-            <input type="text" placeholder="Введіть назву завдання">
-            <Icon class="iconPlus" icon="typcn:plus" />
+            <input 
+            @keyup.enter="addSomeTask"
+            v-model="userTask"
+             type="text" 
+             placeholder="Введіть назву завдання">
+            <Icon 
+            @click="addSomeTask"
+           
+            class="iconPlus" 
+            icon="typcn:plus" />
         </div>
-        <ul>
-            <li>
-                <Icon class="todo_item-list" icon="ic:baseline-circle" />
-                <div class="todo_task">
-                    Зробити Домашку
+        <ul >
+            <li v-for="list in todoList" :key="id">
+                <Icon
+                @click = "changeStatus(list.id)"
+                class="todo_item-list" 
+                :class="{'isActiveIcon':list.data}"
+                icon="mdi:check-circle"
+             />
+                
+                
+                <div 
+                class="todo_task"
+                :class="{'isActive': list.data }">
+                    {{list.task}}
                 </div>
-                <Icon class="todo_task_remove" icon="bi:trash" />
+                <Icon @click="removeUserTask(list)" class="todo_task_remove" icon="bi:trash" />
             </li>
-            <li>
-                <Icon class="todo_item-list" icon="ic:baseline-circle" />
-                <div class="todo_task">
-                    Зробити Домашку
-                </div>
-                <Icon class="todo_task_remove" icon="bi:trash" />
-            </li>
+            
+            
         </ul>
 
     </div>
@@ -89,6 +124,7 @@ input {
     width: 25px;
     height: 25px;
     cursor: pointer;
+    transition:all 0.3s ease-out
 }
 
 .iconPlus:hover {
@@ -123,11 +159,13 @@ li {
     width: 25px;
     height: 25px;
     cursor: pointer;
+    transition:all 0.3s ease-out
 
 }
 
 .todo_task_remove:hover {
     color: red;
+    
 }
 
 .todo_task {
@@ -139,13 +177,22 @@ li {
     width: 25px;
     height: 25px;
     cursor: pointer;
-    color:red
+    
+    transition:all 0.2s ease-out
 }
 .todo_item-list:hover {
-    color:green
+    color: rgb(194, 102, 222);
+    
 }
 .isActive{
     text-decoration: line-through;
+}
+.isActiveIcon{
+    color: rgb(194, 102, 222);
+    transition:all 0.2s ease-out
+}
+.isActiveIcon:hover{
+    color: rgb(194, 102, 222);
 }
 </style>
 

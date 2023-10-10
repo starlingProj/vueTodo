@@ -13,8 +13,10 @@ const emits = defineEmits(['update:modelValue'])
 
 const task = ref(props.modelValue)
 const addSomeText = () => {
-
-   if (task.value) {
+   if(task.value.length>93){
+      window.alert('Будь ласка введіть коротко ваше завдання')
+   }
+   else if (task.value) {
       emits('update:modelValue', task.value)
       props.addSomeTask()
 
@@ -28,8 +30,11 @@ const addSomeText = () => {
 </script>
 <template>
    <div className="todo__add-todoes">
-      <input v-model="task" @keyup.enter="addSomeText" type="text" placeholder="Введіть назву завдання">
-      <Icon @click="addSomeText" class="iconPlus" icon="typcn:plus" />
+      <input
+      v-model="task" 
+      @keyup.enter="addSomeText" type="text" placeholder="Введіть назву завдання">
+      <Icon 
+      @click="addSomeText" class="iconPlus" icon="typcn:plus" />
    </div>
 </template>
 

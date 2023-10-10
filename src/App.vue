@@ -7,11 +7,12 @@ import TheLogoTextToDo from './components/TheLogoTextToDo.vue'
 const todoList = ref([])
 const userTask = ref('')
 const addSomeTask = () => {
+
 todoList.value.push({
-    id: Date.now(),
-    task: userTask.value,
-    data: false
-})
+        id: Date.now(),
+        task: userTask.value,
+        data: false
+    })
 }
 
 const changeStatus = (id) => {

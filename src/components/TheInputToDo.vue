@@ -1,30 +1,24 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
+import { useToDoStore } from "../stores/ToDoStore";
 
-const props = defineProps({
-  modelValue: String,
-  addSomeTask: Function,
-});
+const toDoStore = useToDoStore()
 
-const emits = defineEmits(["update:modelValue"]);
-
-const task = ref(props.modelValue);
+const userTask = ref("");
 const addSomeText = () => {
-  if (task.value.length > 93) {
+  if (userTask.value.length > 93) {
     window.alert("Будь ласка введіть коротко ваше завдання");
-  } else if (task.value) {
-    emits("update:modelValue", task.value);
-    props.addSomeTask();
-
-    task.value = "";
+  } else if (userTask.value) {
+    toDoStore.addSomeTask(userTask.value)
+    userTask.value = "";
   } else return 0;
 };
 </script>
 <template>
   <div className="todo__add-todoes">
     <input
-      v-model="task"
+      v-model="userTask"
       @keyup.enter="addSomeText"
       type="text"
       placeholder="Введіть назву завдання"

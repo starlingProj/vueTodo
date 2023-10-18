@@ -8,14 +8,13 @@
 <style scoped>
 .todo__name {
   color: #f4f4f4;
-
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(194, 102, 222);
 }
 
-.todo__name H4 {
+h4 {
   font-family: "Roboto";
   font-size: 20px;
   font-weight: bolder;

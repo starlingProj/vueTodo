@@ -3,37 +3,21 @@ import { ref } from "vue";
 import TheInputToDo from "./components/TheInputToDo.vue";
 import TheLogoTextToDo from "./components/TheLogoTextToDo.vue";
 import Task from "./components/Task.vue";
+import { useToDoStore } from "./stores/ToDoStore";
 
-const todoList = ref([]);
-const userTask = ref("");
-const addSomeTask = () => {
-  todoList.value.push({
-    id: Date.now(),
-    task: userTask.value,
-    data: false,
-  });
-};
 
-const changeStatus = (id) => {
-  const itemToUpdate = todoList.value.find((item) => item.id === id);
-  itemToUpdate.data = !itemToUpdate.data;
-};
+const toDoStore=useToDoStore()
 
-const removeUserTask = (list) => {
-  todoList.value = todoList.value.filter((item) => item != list);
-};
 </script>
 
 <template>
   <div class="todo">
     <TheLogoTextToDo />
-    <TheInputToDo v-model="userTask" :addSomeTask="addSomeTask" />
+    <TheInputToDo />
     <ul>
       <Task
-        v-for="list in todoList"
+        v-for="list in toDoStore.todoList"
         :key="list.id"
-        :changeStatus="changeStatus"
-        :removeUserTask="removeUserTask"
         :list="list"
       />
     </ul>

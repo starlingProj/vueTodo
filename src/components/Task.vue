@@ -1,16 +1,16 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-const { list, changeStatus, removeUserTask } = defineProps({
+import { useToDoStore } from "../stores/ToDoStore";
+const toDoStore=useToDoStore()
+const { list} = defineProps({
   list: Object,
 
-  changeStatus: Function,
-  removeUserTask: Function,
 });
 </script>
 <template>
   <li>
     <Icon
-      @click="changeStatus(list.id)"
+      @click="toDoStore.changeStatus(list.id)"
       class="todo_item-list"
       :class="{ isActiveIcon: list.data }"
       icon="mdi:check-circle"
@@ -19,7 +19,7 @@ const { list, changeStatus, removeUserTask } = defineProps({
       {{ list.task }}
     </div>
     <Icon
-      @click="removeUserTask(list)"
+      @click="toDoStore.removeUserTask(list)"
       class="todo_task_remove"
       icon="bi:trash"
     />

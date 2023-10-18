@@ -9,6 +9,7 @@ const userTask = ref("");
 const addSomeText = () => {
   if (userTask.value.length > 93) {
     window.alert("Будь ласка введіть коротко ваше завдання");
+    userTask.value = "";
   } else if (userTask.value) {
     toDoStore.addSomeTask(userTask.value)
     userTask.value = "";

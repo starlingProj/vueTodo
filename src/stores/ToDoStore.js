@@ -2,7 +2,11 @@ import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const useToDoStore = defineStore('todoStore',()=>{
-    const todoList = ref([]);
+    const todoList = ref([{
+      id:0,
+      task:'Розібратися з Git',
+      data: false
+    }]);
     const addSomeTask = (userTask) => {
         todoList.value.push({
           id: Date.now(),
